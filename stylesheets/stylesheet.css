@@ -153,10 +153,12 @@ a.button span {
 }
 
 #download-zip span {
-  background: transparent url(../images/zip-icon.png) 12px 50% no-repeat;
+  /*background: transparent url(../images/zip-icon.png) 12px 50% no-repeat;*/
+  margin-left: 100px;
 }
 #download-tar-gz span {
-  background: transparent url(../images/tar-gz-icon.png) 12px 50% no-repeat;
+  /*background: transparent url(../images/tar-gz-icon.png) 12px 50% no-repeat;*/
+  margin-left: 100px;
 }
 #view-on-github span {
   background: transparent url(../images/octocat-icon.png) 12px 50% no-repeat;
@@ -170,7 +172,6 @@ a.button span {
   top: 0; 
   right: 0; 
   border: 0;
-  background: transparent url(https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png) no-repeat;
 }
 
 code, pre {
@@ -362,6 +363,7 @@ footer a:hover {
   }
   #downloads {
     margin-bottom: 25px;
+    display: none;
   }
   #download-zip, #download-tar-gz {
     display: none;
