@@ -57,10 +57,10 @@ body {
 }
 
 a {
-  color: #d5000d;
+  color: #2980b9;
 }
 a:hover {
-  color: #c5000c;
+  color: #3091d1;
 }
 
 header {
@@ -165,6 +165,14 @@ a.button span {
   margin-right: 0;
 }
 
+#fork-on-github {
+  position: absolute; 
+  top: 0; 
+  right: 0; 
+  border: 0;
+  background: transparent url(https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png) no-repeat;
+}
+
 code, pre {
   font-family: Monaco, "Bitstream Vera Sans Mono", "Lucida Console", Terminal;
   color: #222;
@@ -252,7 +260,7 @@ h2 {
 } 
 
 h3 {
-  color: #d5000d;
+  color: #404040;
   font-size: 18px;
   font-weight: bold;
   margin-bottom: 8px;

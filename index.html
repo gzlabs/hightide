@@ -1,76 +1,75 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+<head>
+  <meta charset='utf-8'>
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+  <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+  <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    <title>Hightide by gzlabs</title>
-  </head>
+    <title>Hightide - Java web framework.</title>
+</head>
 
-  <body>
+<body>
     <div id="container">
       <div class="inner">
 
         <header>
-          <h1>Hightide</h1>
-          <h2>Java web framework</h2>
-        </header>
+          <h1>Hightide</h1><small>beta</small>
+          <h2>A fast, reliable and scalable Java web framework.</h2>
+      </header>
+      <a href="https://github.com/gzlabs/hightide"><img id="fork-on-github" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
 
+        <!--
         <section id="downloads" class="clearfix">
           <a href="https://github.com/gzlabs/hightide/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
           <a href="https://github.com/gzlabs/hightide/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
-          <a href="https://github.com/gzlabs/hightide" id="view-on-github" class="button"><span>View on GitHub</span></a>
         </section>
+    -->
+    <hr>
 
-        <hr>
+    <section id="main_content">
+        <h3>
+          <a name="welcome-to-hightide" class="anchor" href="#welcome-to-hightide"><span class="octicon octicon-link"></span></a>Hightide makes writing web applications in Java joyful again!</h3>
 
-        <section id="main_content">
-          <h3>
-<a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>Welcome to GitHub Pages.</h3>
+          <p>Being tired of all the verbosity and boilerplate code/configuration a classic Java web application comes with. Inspired from all this ideas that new lightweight frameworks from non-Java ecosystems brought in. Based on the philosophy of RoR, adapted to the strength and stability of the JVM. Hightide is here to fill this gap.</p>
 
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
+          <p>Creating a new application is as simple as typing:</p>
+          <pre><code>$ hightide new my-awesome-java-app</code></pre>
 
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
-</code></pre>
+        <h3>
+            <a name="technologies" class="anchor" href="#technologies"><span class="octicon octicon-link"></span></a>Build around the latest development trends and JVM technology.</h3>
 
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
+            <p>Based on one of the most advanced VMs on the market (<a href="https://jdk8.java.net/download.html">Java SDK 1.8</a>) and one of the fastest web servers (<a href="http://undertow.io">Undertow</a>). Hightide is set to become a new standard in Java web development.</p>
 
-<h3>
-<a name="designer-templates" class="anchor" href="#designer-templates"><span class="octicon octicon-link"></span></a>Designer Templates</h3>
+            <h3>
+              <a name="install-hightide" class="anchor" href="#install-hightide"><span class="octicon octicon-link"></span></a>Install Hightide</h3>
 
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
+              <p>For mac users using Homebrew.</p>
+              <pre><code>$ brew install hightide</code></pre>
+              <p>Not a mac user? Buy a mac... or manually install using the following link:</p>
+              
+              <section id="downloads" class="clearfix">
+                <a href="https://github.com/gzlabs/hightide/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
+                <a href="https://github.com/gzlabs/hightide/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
+              </section>
 
-<h3>
-<a name="rather-drive-stick" class="anchor" href="#rather-drive-stick"><span class="octicon octicon-link"></span></a>Rather Drive Stick?</h3>
+              <h3>
+                <a name="authors-and-contributors" class="anchor" href="#authors-and-contributors"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
 
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
+                <p>Hightide was created by <strong>George Panagiotopoulos</strong> (<a href="https://github.com/gpan" class="user-mention">@gpan</a>) and sponsored by <strong>Ground Zero Labs</strong> (<a href="https://girhub/gzlabs" class="user-nemtion">@gzlabs</a>). Any comments, bug reports or any kind of contributions are welcome.</p>
+            </section>
 
-<h3>
-<a name="authors-and-contributors" class="anchor" href="#authors-and-contributors"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
+            <footer>
+                Hightide is maintained by <a href="https://github.com/gzlabs">Ground Zero Labs, Private Company</a><br>
+                This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
+            </footer>
 
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
 
-<h3>
-<a name="support-or-contact" class="anchor" href="#support-or-contact"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
-
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
-        </section>
-
-        <footer>
-          Hightide is maintained by <a href="https://github.com/gzlabs">gzlabs</a><br>
-          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
-        </footer>
-
-        
-      </div>
+        </div>
     </div>
-  </body>
+</body>
 </html>
