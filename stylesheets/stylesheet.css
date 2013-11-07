@@ -179,6 +179,11 @@ a.button span {
   border: 0;
 }
 
+#gzlabs-logo {
+  float: right;
+  margin-top: -10px;
+}
+
 code, pre {
   font-family: Monaco, "Bitstream Vera Sans Mono", "Lucida Console", Terminal;
   color: #222;
@@ -331,7 +336,7 @@ footer {
   padding-bottom: 30px;
   font-size: 13px;
   color: #aaa;
-  text-align: center;
+  /*text-align: center;*/
 }
 
 footer a {
