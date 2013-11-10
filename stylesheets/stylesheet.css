@@ -82,7 +82,7 @@ header h1 {
 
 header h2 {
   font-family: 'Lato', Helvetica, Arial, serif; font-weight: 300;
-  letter-spacing: -1px;
+  /*letter-spacing: -1px;*/
   font-size: 24px;
   color: #aaa;
   line-height: 1.3;
