@@ -1,0 +1,2 @@
+io.hightide.commands.NewAppCommand
+io.hightide.commands.GenerateCommand

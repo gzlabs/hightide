@@ -1,0 +1,17 @@
+@args String str
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Welcome to Hightide!</title>
+</head>
+<body>
+    <strong>Message from Dev Assist:</strong> @str
+    <p>
+        Hello, welcome to Hightide!<br/>
+        You came here because a routes.conf file doesn't exist.
+        Create a routes.conf file in app/routes directory.
+    </p>
+
+</body>
+</html>

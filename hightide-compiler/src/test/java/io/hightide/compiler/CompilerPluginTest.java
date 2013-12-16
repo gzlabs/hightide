@@ -1,0 +1,45 @@
+package io.hightide.compiler;
+
+import org.junit.Assert;
+import org.junit.Test;
+
+import javax.tools.Diagnostic;
+import javax.tools.JavaFileObject;
+import java.lang.reflect.Modifier;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.util.List;
+
+import static java.util.Arrays.stream;
+
+/**
+ * @author <a href="mailto:gpan@groundzerolabs.com">George Panagiotopoulos</a>
+ */
+public class CompilerPluginTest extends AbstractCompilerPluginTest {
+
+    @Test
+    public void testCompilerPluginInit() {
+
+        List<Diagnostic<? extends JavaFileObject>> diagnostics =
+                compileTestCase(
+                        "src/test/java/io/hightide/enjos/TestClass.java");
+        assertCompilationSuccessful(diagnostics);
+
+        try {
+            URLClassLoader loader = new URLClassLoader(new URL[]{ new URL("file:/Users/gpan/Work/GroundZeroLabs/Projects/Hightide/hightide/hightide-compiler/src/test/java/") }, null);
+            Class<?> aClass = loader.loadClass("io.hightide.enjos.TestClass");
+
+            /** It should have created 3 getters, 2 setters (no setters for final properties), plus 4 existing methods. */
+            Assert.assertEquals(9, aClass.getDeclaredMethods().length);
+
+            /** There should be 3 private modifiers added in no-mod properties, one already private. */
+            Assert.assertEquals(4,
+                    stream(aClass.getDeclaredFields())
+                    .filter(f -> Modifier.isPrivate(f.getModifiers()))
+                    .count()
+            );
+        } catch (Exception e) {
+            Assert.fail(e.getMessage());
+        }
+    }
+}

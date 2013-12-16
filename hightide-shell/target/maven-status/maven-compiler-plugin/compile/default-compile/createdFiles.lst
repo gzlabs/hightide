@@ -1,0 +1,12 @@
+io/hightide/commands/gradle/CompileCommand.class
+io/hightide/commands/CommandOption.class
+io/hightide/commands/gradle/DebugCommand.class
+io/hightide/commands/gradle/RunCommand.class
+io/hightide/commands/gradle/TestCommand.class
+io/hightide/commands/Command.class
+io/hightide/shell/HightideShell$HightideShellHolder.class
+io/hightide/commands/HelpCommand.class
+io/hightide/shell/HightideShell$1.class
+io/hightide/shell/HightideShell.class
+io/hightide/commands/gradle/GradleSupport.class
+io/hightide/shell/ShellColors.class
