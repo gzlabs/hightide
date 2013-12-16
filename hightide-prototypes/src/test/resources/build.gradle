@@ -1,0 +1,35 @@
+buildscript {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath group: 'io.hightide', name: 'gradle-hightide-plugin', version: '0.1-SNAPSHOT'
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'hightide'
+
+group = 'io.hightide'
+version = '0.1-SNAPSHOT'
+
+description = """template-parser-test"""
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+     mavenLocal()
+     mavenCentral()
+}
+
+dependencies {
+    compile group: 'io.hightide', name: 'hightide-core', version:'0.1-SNAPSHOT'
+
+    // The following two dependencies are for application DEV phase.
+    compile files("${System.getProperty('java.home')}/../lib/tools.jar")
+    runtime group: 'io.hightide', name: 'hightide-devassist', version: '0.1-SNAPSHOT'
+}
