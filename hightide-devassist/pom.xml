@@ -54,6 +54,9 @@
             <resource>
                 <directory>app/templates</directory>
             </resource>
+            <resource>
+                <directory>public</directory>
+            </resource>
         </resources>
         <plugins>
             <plugin>

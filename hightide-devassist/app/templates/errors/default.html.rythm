@@ -1,3 +1,5 @@
+@args String message, Integer responseCode, String reason, String exception, String exceptionMsg
+
 <!doctype html>
 <html class="no-js" lang="en">
 <head>
@@ -10,7 +12,7 @@
   <script src="/vendor/js/modernizr.js"></script>
   <style>
     .header {
-      background: #519dc9; }
+      background: #d8464e; }
       .header h1 {
         color: #f8f8f8;
         font-weight: 300; }
@@ -100,7 +102,7 @@
     <div class="header">
       <div class="row">
         <div class="large-12 columns">
-          <h1>Welcome to Hightide</h1>
+          <h1>@responseCode - @reason</h1>
         </div>
       </div>
     </div>
@@ -108,8 +110,8 @@
     <div class="intro">
       <div class="row">
         <div class="large-12 columns">
-          <h3>We&rsquo;re stoked you want to try Hightide! </h3>
-          <p>This page includes some basic information to get you started.</p>
+          <h3>@message</h3>
+          <p>@exceptionMsg</p>
         </div>
       </div>
     </div>
@@ -117,71 +119,54 @@
     <div class="row">
       <div class="large-12 columns">
         <dl class="tabs radius file-tabs" data-tab>
-          <dd class="active"><a href="#panel1"><i class="fi-page"></i> Main.java</a></dd>
-          <dd><a href="#panel3"><i class="fi-page"></i> routes.conf</a></dd>
+          <dd class="active"><a href="#assistant"><i class="fi-first-aid"></i> Assistant</a></dd>
+          <dd><a href="#exception"><i class="fi-alert"></i> Exception</a></dd>
         </dl>
         <div class="tabs-content file-content">
-          <div class="content active" id="panel1">
+          <div class="content active" id="assistant">
+            <p>It seems there's a route mapping missing. Check <strong>app/routes/routes.conf</strong></p>
+          </div>
+          <div class="content" id="exception">
             <pre><code class="language-java">
-@verbatim() {
-package actions;
-
-import resources.Person;
-
-class Main {
-  Person index() {
-    Person p = new Person();
-    p.setName("A name...");
-    p.setLastName("followed by a lastname...");
-    p.setDescription("with a description");
-    return p;
-  }
-}
-}
+              @raw() {
+                @exception
+              }
             </code></pre>
-          </div>
-          <div class="content" id="panel3">
-            <pre><code class="language-javascript">
-@verbatim() {
-routes {
-  "/main".get: Main.index
-}
-}
-            </code></pre>
-          </div>
-        </div>
-    </div>
-  </div>
-  <div class="outro">
-    <div class="row">
-      <div class="large-12 columns">
-        <h4>Need more?</h4>
-        <div class="row">
-          <div class="large-4 medium-4 columns">
-            <div class="docs-icon">
-              <a href="http://docs.hightide.io"><i class="fi-book"></i></a>
-            </div>
-            <h4 class="text-center"><a href="http://docs.hightide.io">Hightide Documentation</a></h4>
-            <p>Everything you need to know about using the framework.</p>
-          </div>
-          <div class="large-4 medium-4 columns">
-            <div class="src-icon">
-              <a href="http://github.com/gzlabs/hightide"><i class="fi-social-github"></i></a>
-            </div>
-            <h4 class="text-center"><a href="http://github.com/gzlabs/hightide">Hightide on Github</a></h4>
-            <p>Latest code, issue reports, feature requests and more.</p>
-          </div>
-          <div class="large-4 medium-4 columns">
-            <div class="follow-icon">
-              <a href="http://twitter.com/hightide-io"><i class="fi-social-twitter"></i></a>
-            </div>
-            <h4 class="text-center"><a href="http://twitter.com/hightide-io">@verbatim(){@hightide-io}</a></h4>
-            <p>Ping us on Twitter if you have questions. If you build something with this we'd love to see it (and send you a totally boss sticker).</p>
           </div>
         </div>
       </div>
     </div>
-  </div>
+
+    <div class="outro">
+      <div class="row">
+        <div class="large-12 columns">
+          <h4>Need more?</h4>
+          <div class="row">
+            <div class="large-4 medium-4 columns">
+              <div class="docs-icon">
+                <a href="http://docs.hightide.io"><i class="fi-book"></i></a>
+              </div>
+              <h4 class="text-center"><a href="http://docs.hightide.io">Hightide Documentation</a></h4>
+              <p>Everything you need to know about using the framework.</p>
+            </div>
+            <div class="large-4 medium-4 columns">
+              <div class="src-icon">
+                <a href="http://github.com/gzlabs/hightide"><i class="fi-social-github"></i></a>
+              </div>
+              <h4 class="text-center"><a href="http://github.com/gzlabs/hightide">Hightide on Github</a></h4>
+              <p>Latest code, issue reports, feature requests and more.</p>
+            </div>
+            <div class="large-4 medium-4 columns">
+              <div class="follow-icon">
+                <a href="http://twitter.com/hightide-io"><i class="fi-social-twitter"></i></a>
+              </div>
+              <h4 class="text-center"><a href="http://twitter.com/hightide-io">@@hightide-io</a></h4>
+              <p>Ping us on Twitter if you have questions. If you build something with this we'd love to see it (and send you a totally boss sticker).</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
 
   <script src="/vendor/js/jquery.js"></script>
