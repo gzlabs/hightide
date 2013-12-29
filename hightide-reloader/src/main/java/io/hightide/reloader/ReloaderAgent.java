@@ -19,6 +19,7 @@ package io.hightide.reloader;
 import io.hightide.Application;
 import io.hightide.ApplicationConfig;
 import io.hightide.ApplicationContext;
+import io.hightide.route.RouteParsingException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -98,9 +99,8 @@ public class ReloaderAgent {
             URL[] clUrls = new URL[]{new File(generatedSrcDir + File.separator).toURI().toURL()};
             return new ReloadableClassLoader(clUrls, generatedSrcDir);
         } catch (Exception e) {
-            new RuntimeException("Failed to initialize ReloadableClassLoader");
+            throw new RuntimeException("Failed to initialize ReloadableClassLoader");
         }
-        return null;
     }
 
     private static void initSourceFileWatcher() {
@@ -110,13 +110,22 @@ public class ReloaderAgent {
                     case FILE_CREATED:
                     case FILE_MODIFIED:
                         try {
-                            compiler.run(path);
-                            if (ev.equals(FileWatcher.FileChangeEvent.FILE_CREATED)) {
-                                Application.getAppClassLoader().loadClass(normalizeClassname(srcDir, path.toString()));
+                            if (isRoutesFile(path)) {
+                                try {
+                                    ApplicationContext.instance().getRoutesManager().loadRoutes();
+                                } catch (RouteParsingException e) {
+                                    logger.error("Failed to reload routes", e);
+                                }
+
                             } else {
-                                if (Application.getAppClassLoader() instanceof ReloadableClassLoader) {
-                                    ((ReloadableClassLoader) Application.getAppClassLoader())
-                                            .reloadClass(normalizeClassname(srcDir, path.toString()));
+                                compiler.run(path);
+                                if (ev.equals(FileWatcher.FileChangeEvent.FILE_CREATED)) {
+                                    Application.getAppClassLoader().loadClass(normalizeClassname(srcDir, path.toString()));
+                                } else {
+                                    if (Application.getAppClassLoader() instanceof ReloadableClassLoader) {
+                                        ((ReloadableClassLoader) Application.getAppClassLoader())
+                                                .reloadClass(normalizeClassname(srcDir, path.toString()));
+                                    }
                                 }
                             }
                         } catch (ClassNotFoundException e) {
@@ -152,7 +161,6 @@ public class ReloaderAgent {
                     case FILE_CREATED:
                     case FILE_MODIFIED:
                         logger.debug("Config file {} modified.", path.toString());
-                        //RouteHandler.instance().loadRoutes();
                         break;
                     case FILE_DELETED:
                         //TODO - If a config is deleted ???
@@ -165,9 +173,11 @@ public class ReloaderAgent {
     }
 
     private static String normalizeClassname(String prefix, String name) {
-        String str = name.substring((prefix + File.separator).length()).replace(File.separator, ".").replace(".java", "");
         return name.replace(prefix + File.separator, "").replace(File.separator, ".").replace(".java", "");
     }
 
-
+    private static boolean isRoutesFile(Path path) {
+        Path routesPath = Paths.get(config.getString("dirs.routes"));
+        return path.startsWith(routesPath);
+    }
 }
