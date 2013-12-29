@@ -20,7 +20,7 @@ public class GenerateCommand implements Command {
 
     @Override
     public String getDescription() {
-        return "Generate application artifacts based on the given generator.";
+        return "Generate application artifacts.";
     }
 
     @Override

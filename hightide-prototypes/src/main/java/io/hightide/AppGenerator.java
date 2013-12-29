@@ -1,5 +1,7 @@
 package io.hightide;
 
+import io.hightide.shell.HightideShell;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.*;
@@ -11,6 +13,7 @@ import static java.nio.file.FileVisitResult.CONTINUE;
 import static java.nio.file.FileVisitResult.SKIP_SUBTREE;
 import static java.nio.file.StandardCopyOption.COPY_ATTRIBUTES;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
+import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 import static java.util.stream.Collectors.toSet;
 
@@ -38,7 +41,7 @@ public class AppGenerator {
             this.source = source;
             this.target = target;
             this.attributes = attributes;
-            String ignoreFilesVal = null;
+            String ignoreFilesVal;
             if (nonNull(ignoreFilesVal = (String) attributes.get("ignoreFiles")))  {
                 this.ignoreFiles = Arrays.asList(ignoreFilesVal.split(","))
                         .stream().map(String::trim)
@@ -123,7 +126,18 @@ public class AppGenerator {
         Map<String, Object> attributes = new HashMap<>();
         Properties prop = new Properties();
         prop.load(new FileInputStream(source.resolve("prototype.properties").toFile()));
-        prop.forEach((k, v) -> attributes.put(k.toString(), v));
+        prop.forEach((k, v) -> {
+            try {
+                String newValue = HightideShell.instance().readLine("What's the '" + k + "' [default is " + v + "]");
+                if (isNull(newValue) || newValue.equals("")) {
+                    newValue = (String) v;
+                }
+                attributes.put(k.toString(), newValue);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        });
         return attributes;
     }
 }

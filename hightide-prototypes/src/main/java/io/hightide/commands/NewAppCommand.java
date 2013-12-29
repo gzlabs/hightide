@@ -31,6 +31,11 @@ import static java.util.Objects.isNull;
  */
 public class NewAppCommand implements Command {
 
+    String[] usages = new String[] {
+        "new <app_name>", // + "\t\tCreate a new application with default template.\n");
+        "new <app_name> <template_type>:<template_name>" // + "\tCreates a new application using provided template.");
+    };
+
     @Override
     public String getName() {
         return "new";
@@ -56,10 +61,6 @@ public class NewAppCommand implements Command {
 
     @Override
     public String[] getUsages() {
-        String[] usages = new String[] {
-            "new <app_name>", // + "\t\tCreate a new application with default template.\n");
-            "new <app_name> <template_type>:<template_name>" // + "\tCreates a new application using provided template.");
-        };
         return usages;
     }
 

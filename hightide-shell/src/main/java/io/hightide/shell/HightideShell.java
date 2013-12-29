@@ -41,6 +41,10 @@ public class HightideShell {
 
     private static Set<Command> commands = new LinkedHashSet<>();
 
+    private ConsoleReader reader;
+
+    private boolean consoleMode = false;
+
     private HightideShell() {}
 
     private static class HightideShellHolder {
@@ -62,8 +66,21 @@ public class HightideShell {
         }
     }
 
+    public boolean isConsoleMode() {
+        return this.consoleMode;
+    }
+
+    public String readLine(String promptMessage) throws IOException {
+        if (isNull(reader)) {
+            reader = new ConsoleReader();
+        }
+        String line = reader.readLine(green(promptMessage + "> "));
+        return line.trim();
+    }
+
     private void console() throws Exception {
-        ConsoleReader reader = new ConsoleReader();
+        reader = new ConsoleReader();
+        consoleMode = true;
         reader.setBellEnabled(false);
 //        List<Completer> completors = new LinkedList<>();
         List<String> commandNames = commands.stream().map(Command::getName).collect(toList());
@@ -73,7 +90,7 @@ public class HightideShell {
         String line;
         PrintWriter out = new PrintWriter(reader.getOutput());
 
-        while ((line = readLine(reader, "")) != null) {
+        while ((line = readLine("hightide")) != null) {
             if ("exit".equals(line)) {
                 exit();
                 return;
@@ -111,12 +128,6 @@ public class HightideShell {
             return true;
         }
         return false;
-    }
-
-    private String readLine(ConsoleReader reader, String promptMessage) throws IOException {
-
-        String line = reader.readLine(promptMessage + "\n" + green("hightide> "));
-        return line.trim();
     }
 
     private void printBanner() {

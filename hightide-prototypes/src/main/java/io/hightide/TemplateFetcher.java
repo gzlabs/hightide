@@ -69,13 +69,13 @@ public final class TemplateFetcher {
                 //git archive master --remote=<repo>| gzip > archive.tar.gz
             case "github":
                 orgProj = tkns[1];
-                System.out.println("Downloading template archive from github.com");
+                System.out.println("Downloading template from github");
 
                 httpGetTemplate(tempDir.resolve(TEMP_ARCHIVE_NAME), "http://github.com/" + orgProj + "/archive/master.tar.gz");
                 return extractTemplate(tempDir.resolve(TEMP_ARCHIVE_NAME));
             case "bitbucket":
                 orgProj = tkns[1];
-                System.out.println("Downloading template archive from bitbucket.org");
+                System.out.println("Downloading template from bitbucket");
                 httpGetTemplate(tempDir.resolve(TEMP_ARCHIVE_NAME), "http://bitbucket.org/" + orgProj + "/get/master.tar.gz");
                 return extractTemplate(tempDir.resolve(TEMP_ARCHIVE_NAME));
             case "url":
@@ -93,7 +93,7 @@ public final class TemplateFetcher {
         byte[] buffer = new byte[BUFFER];
         try (
                 InputStream input = response.getEntity().getContent();
-                OutputStream output = new FileOutputStream(tempFile.toFile());
+                OutputStream output = new FileOutputStream(tempFile.toFile())
         ) {
             for (int length; (length = input.read(buffer)) > 0; ) {
                 output.write(buffer, 0, length);
@@ -110,9 +110,9 @@ public final class TemplateFetcher {
                 FileInputStream fin = new FileInputStream(tempFile.toFile());
                 BufferedInputStream in = new BufferedInputStream(fin);
                 GzipCompressorInputStream gzIn = new GzipCompressorInputStream(in);
-                TarArchiveInputStream tarIn = new TarArchiveInputStream(gzIn);
+                TarArchiveInputStream tarIn = new TarArchiveInputStream(gzIn)
         ) {
-            TarArchiveEntry entry = null;
+            TarArchiveEntry entry;
             Path rootDir = null;
             while ((entry = (TarArchiveEntry) tarIn.getNextEntry()) != null) {
                 System.out.println("Extracting: " + entry.getName());

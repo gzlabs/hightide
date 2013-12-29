@@ -85,7 +85,7 @@
         <logback.version>1.0.13</logback.version>
         <jackson.version>2.3.0</jackson.version>
         <jooq.version>3.2.0</jooq.version>
-        <querydsl.version>3.3.0.BETA1</querydsl.version>
+        <querydsl.version>3.3.0</querydsl.version>
     </properties>
 
     <dependencyManagement>
@@ -123,7 +123,7 @@
             <dependency>
                 <groupId>io.undertow</groupId>
                 <artifactId>undertow-core</artifactId>
-                <version>1.0.0.Beta26</version>
+                <version>1.0.0.Beta30</version>
             </dependency>
 
             <!-- JSON dependencies -->
@@ -142,7 +142,7 @@
             <dependency>
                 <groupId>org.rythmengine</groupId>
                 <artifactId>rythm-engine</artifactId>
-                <version>1.0-b9</version>
+                <version>1.0-b10</version>
                 <exclusions>
                     <exclusion>
                         <groupId>org.eclipse.jdt.core.compiler</groupId>
@@ -174,7 +174,7 @@
             <dependency>
                 <groupId>com.zaxxer</groupId>
                 <artifactId>HikariCP</artifactId>
-                <version>1.1.8</version>
+                <version>1.2.1</version>
                 <scope>compile</scope>
             </dependency>
 
@@ -241,7 +241,7 @@
             <dependency>
                 <groupId>org.liquibase</groupId>
                 <artifactId>liquibase-core</artifactId>
-                <version>3.0.7</version>
+                <version>3.0.8</version>
             </dependency>
 
             <dependency>
@@ -303,7 +303,7 @@
             <dependency>
                 <groupId>org.gradle</groupId>
                 <artifactId>gradle-tooling-api</artifactId>
-                <version>1.9</version>
+                <version>1.10</version>
             </dependency>
 
             <!-- Test dependencies -->
