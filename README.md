@@ -1,4 +1,4 @@
-hightide
+Hightide
 ========
 
 Java web framework
