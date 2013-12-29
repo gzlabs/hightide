@@ -16,9 +16,8 @@
 
 package io.hightide;
 
+import io.hightide.route.RoutesManager;
 import io.hightide.security.SecurityMode;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import static java.util.Objects.isNull;
 
@@ -27,16 +26,17 @@ import static java.util.Objects.isNull;
  */
 public final class ApplicationContext {
 
-    private static final Logger logger = LoggerFactory.getLogger(ApplicationContext.class);
-
     private ApplicationConfig config;
 
     private ApplicationStage appStage;
 
     private SecurityMode securityMode;
 
+    private RoutesManager routesManager;
+
     private ApplicationContext() {
         this.config = new ApplicationConfig();
+        this.routesManager = new RoutesManager();
     }
 
     private static class ApplicationContextHolder {
@@ -49,6 +49,10 @@ public final class ApplicationContext {
 
     public ApplicationConfig getConfig() {
         return config;
+    }
+
+    public RoutesManager getRoutesManager() {
+        return routesManager;
     }
 
     public ApplicationStage getAppStage() {

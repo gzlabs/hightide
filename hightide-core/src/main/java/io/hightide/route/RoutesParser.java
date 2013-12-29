@@ -55,7 +55,7 @@ public final class RoutesParser {
         return parse("routes.conf");
     }
 
-    public static LinkedHashSet<Route> parse(String routesFileName) throws RouteParsingException {
+    private static LinkedHashSet<Route> parse(String routesFileName) throws RouteParsingException {
         LinkedHashSet<Route> routes = new LinkedHashSet<>();
         ConfigObject confRoutes;
         try {
@@ -163,7 +163,7 @@ public final class RoutesParser {
                                 if (methodArgsMatcher.find()) {
                                     action = action.substring(0, methodArgsMatcher.start());
                                     String paramType = methodArgsMatcher.group(1);
-                                    Class<?> paramClass = null;
+                                    Class<?> paramClass;
                                     if (!paramType.contains(".")) {
                                         paramType = "java.lang." + paramType;
                                     }
@@ -196,7 +196,7 @@ public final class RoutesParser {
                                     logger.debug("Parsed route: " + r);
                                     routes.add(r);
                                 } catch (ClassNotFoundException | NoSuchMethodException e) {
-                                    throw new RouteParsingException("Failed to parse route; action class or method unavailable.", e);
+                                    throw new RouteParsingException("Failed to parse route; action class or method does not exist.", e);
                                 }
                             }
                             break;
@@ -234,8 +234,7 @@ public final class RoutesParser {
     }
 
     private static Class<?> findClass(String className) throws ClassNotFoundException {
-        Class<?> clazz = Application.getAppClassLoader().loadClass(className);
-        return clazz;
+        return Application.getAppClassLoader().loadClass(className);
     }
 
     private static Method findMethod(Class<?> clazz, String methodName) throws NoSuchMethodException {

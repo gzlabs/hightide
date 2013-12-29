@@ -18,6 +18,7 @@ package io.hightide.handlers;
 
 import io.hightide.ApplicationContext;
 import io.hightide.ApplicationStage;
+import io.hightide.renderers.RythmHtmlRenderer;
 import io.undertow.io.Sender;
 import io.undertow.server.DefaultResponseListener;
 import io.undertow.server.HttpHandler;
@@ -29,6 +30,8 @@ import org.apache.commons.lang3.StringEscapeUtils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.HashMap;
+import java.util.Map;
 
 import static java.util.Objects.nonNull;
 
@@ -59,16 +62,32 @@ public class ErrorHandler implements HttpHandler {
                 if (!exchange.isResponseChannelAvailable()) {
                     return false;
                 }
-
                 if (exchange.getResponseCode() >= 400) {
-                    String exceptionString = printException(exchange.getAttachment(HightideHandler.EXCEPTION_ATTACHMENT));
+                    Throwable t = exchange.getAttachment(HightideHandler.EXCEPTION_ATTACHMENT);
+                    String exceptionString;
                     String message = exchange.getResponseCode() == 404 ?
                             "Wrong address, no one lives here!" : "Server's on fire, run for your life!";
-                    final String errorPage = "<html><head><title>Error</title></head><body>"
-                            + "<h1>"+ message + "</h1>"
-                            + exchange.getResponseCode() + " - " + StatusCodes.getReason(exchange.getResponseCode())
-                            + exceptionString
-                            + "</body></html>";
+
+                    String errorPage;
+                    try {
+                        Map<String, Object> errorMap = new HashMap<>();
+                        errorMap.put("message", message);
+                        errorMap.put("responseCode", exchange.getResponseCode());
+                        errorMap.put("reason", StatusCodes.getReason(exchange.getResponseCode()));
+                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                        t.printStackTrace(new PrintStream(baos));
+                        exceptionString = baos.toString();
+                        errorMap.put("exception", exceptionString);
+                        errorMap.put("exceptionMsg", t.getMessage());
+                        errorPage = new RythmHtmlRenderer().render("errors/default.html.rythm", errorMap);
+                    } catch (Exception e) {
+                        exceptionString = printException(t);
+                        errorPage = "<html><head><title>Error</title></head><body>"
+                                + "<h1>" + message + "</h1>"
+                                + exchange.getResponseCode() + " - " + StatusCodes.getReason(exchange.getResponseCode())
+                                + exceptionString
+                                + "</body></html>";
+                    }
                     exchange.getResponseHeaders().put(Headers.CONTENT_LENGTH, "" + errorPage.length());
                     exchange.getResponseHeaders().put(Headers.CONTENT_TYPE, "text/html");
                     Sender sender = exchange.getResponseSender();
@@ -94,13 +113,13 @@ public class ErrorHandler implements HttpHandler {
         sb.append("<div><strong>Error Message:</strong> ").append(t.getClass().getName()).append(" - ").append(message).append("<br/><br/>");
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         t.printStackTrace(new PrintStream(baos));
-        sb.append("<div><Strong>Stacktrace</strong><br/>").append(htmlify(baos.toString())).append("</div>");
+        sb.append("<strong>Stacktrace</strong><br/><div class='exception'>").append(htmlify(baos.toString())).append("</div>");
         //sb.append("File name: ").append(ste.getFileName()).append(" at line ").append(ste.getLineNumber()).append(nl);
         //sb.append("Method Called: ").append(ste.getClassName()).append(".").append(ste.getMethodName());
         return sb.toString();
     }
 
     private String htmlify(String str) {
-        return StringEscapeUtils.escapeHtml4(str).replaceAll("\\n","<br/>").replaceAll("\\t", "&nbsp;&nbsp;&nbsp;&nbsp;");
+        return StringEscapeUtils.escapeHtml4(str).replaceAll("\\n", "<br/>").replaceAll("\\t", "&nbsp;&nbsp;&nbsp;&nbsp;");
     }
 }

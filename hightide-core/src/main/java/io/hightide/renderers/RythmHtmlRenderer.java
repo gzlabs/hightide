@@ -19,10 +19,6 @@ package io.hightide.renderers;
 import io.hightide.*;
 import org.rythmengine.Rythm;
 import org.rythmengine.RythmEngine;
-import org.rythmengine.extension.ITemplateResourceLoader;
-import org.rythmengine.internal.compiler.TemplateClass;
-import org.rythmengine.resource.ITemplateResource;
-import org.rythmengine.resource.TemplateResourceManager;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -71,44 +67,40 @@ public class RythmHtmlRenderer implements RenderEngine {
         String resource = exchange.getResolvedRoute().getInvocationAction().getClazz().getSimpleName().toLowerCase();
         String action = exchange.getResolvedRoute().getInvocationAction().getMethod().getName();
 
-        File templateFile = new File(templateDir + File.separator + resource + File.separator + action + "." + templateExtension);
-        if (templateFile.exists()) {
-            return engine.render(templateFile, obj);
-        }
+        String templateName = null;
+        try {
+            File templateFile = new File(templateDir + File.separator + resource + File.separator + action + "." + templateExtension);
+            templateName = templateFile.getName();
+            if (templateFile.exists()) {
+                return render(templateFile, obj);
+            }
 
+            /** Try to find template in classpath */
+            templateName = resource + File.separator + action + "." + templateExtension;
+
+            return render(templateName, obj);
+
+        } catch (Exception e) {
+            throw new TemplateNotFoundException("Template " + templateName + " does not exist.", e);
+        }
+    }
+
+    public String render(File templateFile, Object obj) throws Exception {
+        return engine.render(templateFile, obj);
+    }
+
+    public String render(String templateName, Object obj) throws Exception {
         /** Try to find template in classpath */
         try {
             InputStream is = getClass().getClassLoader()
-                    .getResourceAsStream(resource + File.separator + action + "." + templateExtension);
+                    .getResourceAsStream(templateName);
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
 
             String templateStr = br.lines().reduce("", String::concat);
             return engine.renderString(templateStr, obj);
         } catch (Exception e) {
-            throw new TemplateNotFoundException("Template " + templateFile.getPath() + " does not exist.", e);
+            throw new TemplateNotFoundException("Template " + templateName + " does not exist.", e);
         }
     }
 
-    private class TemplateResourceLoader implements ITemplateResourceLoader {
-
-        @Override
-        public ITemplateResource load(String path) {
-            return null;
-        }
-
-        @Override
-        public TemplateClass tryLoadTemplate(String tmplName, RythmEngine engine, TemplateClass callerTemplateClass) {
-            return null;
-        }
-
-        @Override
-        public String getFullName(TemplateClass tc, RythmEngine engine) {
-            return null;
-        }
-
-        @Override
-        public void scan(String root, TemplateResourceManager manager) {
-
-        }
-    }
 }

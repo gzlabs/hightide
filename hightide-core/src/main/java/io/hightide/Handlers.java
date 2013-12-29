@@ -16,7 +16,9 @@
 
 package io.hightide;
 
+import io.hightide.exceptions.HandlerInitializationException;
 import io.hightide.handlers.*;
+import io.hightide.route.RoutesManager;
 import io.hightide.security.SecurityHandler;
 import io.undertow.server.HttpHandler;
 
@@ -49,8 +51,9 @@ public class Handlers {
         return new FormsHandler(nextHandler);
     }
 
-    public static HttpHandler route(final HttpHandler nextHandler) {
-        return new RouteHandler(nextHandler);
+    public static HttpHandler route(final RoutesManager routesManager, final HttpHandler nextHandler)
+    throws HandlerInitializationException {
+        return new RouteHandler(routesManager, nextHandler);
     }
 
     public static HttpHandler invocation(final HttpHandler nextHandler) {

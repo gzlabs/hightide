@@ -18,9 +18,10 @@ package io.hightide.handlers;
 
 import io.hightide.HightideExchange;
 import io.hightide.HightideRequest;
+import io.hightide.exceptions.HandlerInitializationException;
 import io.hightide.route.Route;
 import io.hightide.route.RouteParsingException;
-import io.hightide.route.RoutesParser;
+import io.hightide.route.RoutesManager;
 import io.hightide.route.UnmatchedRouteException;
 import io.undertow.server.HttpHandler;
 import org.slf4j.Logger;
@@ -42,16 +43,16 @@ public final class RouteHandler extends HightideHandler {
 
     private LinkedHashSet<Route> routes;
 
-    public RouteHandler(HttpHandler next) {
+    public RouteHandler(RoutesManager manager, HttpHandler next) {
         super(next);
-        loadRoutes();
+        loadRoutes(manager);
     }
 
-    public void loadRoutes() {
+    private void loadRoutes(RoutesManager manager) {
         try {
-            routes = RoutesParser.parse();
+            routes = manager.loadRoutes();
         } catch (RouteParsingException e) {
-            logger.error("Failed to load routes!", e);
+            throw new HandlerInitializationException("Failed to load routes!", e);
         }
     }
 
