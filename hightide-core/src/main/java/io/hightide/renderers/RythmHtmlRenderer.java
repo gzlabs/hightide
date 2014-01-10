@@ -26,6 +26,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Properties;
 
+import static java.util.Objects.isNull;
+
 /**
  * @author <a href="mailto:gpan@groundzerolabs.com">George Panagiotopoulos</a>
  */
@@ -77,9 +79,7 @@ public class RythmHtmlRenderer implements RenderEngine {
 
             /** Try to find template in classpath */
             templateName = resource + File.separator + action + "." + templateExtension;
-
             return render(templateName, obj);
-
         } catch (Exception e) {
             throw new TemplateNotFoundException("Template " + templateName + " does not exist.", e);
         }
@@ -90,17 +90,13 @@ public class RythmHtmlRenderer implements RenderEngine {
     }
 
     public String render(String templateName, Object obj) throws Exception {
-        /** Try to find template in classpath */
-        try {
-            InputStream is = getClass().getClassLoader()
-                    .getResourceAsStream(templateName);
-            BufferedReader br = new BufferedReader(new InputStreamReader(is));
-
-            String templateStr = br.lines().reduce("", String::concat);
-            return engine.renderString(templateStr, obj);
-        } catch (Exception e) {
-            throw new TemplateNotFoundException("Template " + templateName + " does not exist.", e);
+        InputStream is = getClass().getClassLoader().getResourceAsStream(templateName);
+        if (isNull(is)) {
+            throw new TemplateNotFoundException("Template " + templateName + " does not exist.");
         }
+        BufferedReader br = new BufferedReader(new InputStreamReader(is));
+        String templateStr = br.lines().reduce("", String::concat);
+        return engine.renderString(templateStr, obj);
     }
 
 }

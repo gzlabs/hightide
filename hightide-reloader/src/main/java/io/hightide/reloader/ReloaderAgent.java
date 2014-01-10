@@ -51,7 +51,7 @@ public class ReloaderAgent {
     private static RuntimeCompiler compiler;
 
     public static void premain(String agentArgs, Instrumentation inst) {
-        logger.debug("Starting Reloader Agent...");
+        logger.info("Starting Reloader Agent...");
         ReloaderAgent.inst = inst;
         enabled = true;
 

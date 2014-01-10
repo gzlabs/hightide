@@ -69,13 +69,13 @@ public final class TemplateFetcher {
                 //git archive master --remote=<repo>| gzip > archive.tar.gz
             case "github":
                 orgProj = tkns[1];
-                System.out.println("Downloading template from github");
+                System.out.println("Downloading template from github.com");
 
                 httpGetTemplate(tempDir.resolve(TEMP_ARCHIVE_NAME), "http://github.com/" + orgProj + "/archive/master.tar.gz");
                 return extractTemplate(tempDir.resolve(TEMP_ARCHIVE_NAME));
             case "bitbucket":
                 orgProj = tkns[1];
-                System.out.println("Downloading template from bitbucket");
+                System.out.println("Downloading template from bitbucket.org");
                 httpGetTemplate(tempDir.resolve(TEMP_ARCHIVE_NAME), "http://bitbucket.org/" + orgProj + "/get/master.tar.gz");
                 return extractTemplate(tempDir.resolve(TEMP_ARCHIVE_NAME));
             case "url":

@@ -26,4 +26,8 @@ public class TemplateNotFoundException extends ServerErrorException {
     public TemplateNotFoundException(String message, Throwable t) {
         super(message, t);
     }
+
+    public TemplateNotFoundException(String message) {
+        super(message);
+    }
 }
