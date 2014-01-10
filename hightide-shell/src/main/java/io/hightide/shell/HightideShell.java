@@ -58,8 +58,10 @@ public class HightideShell {
     public void start(String args[]) throws Exception {
         Terminal terminal = TerminalFactory.get();
         terminal.isAnsiSupported();
-        printBanner();
         if (isNull(args) || args.length == 0) {
+            printBanner();
+            System.out.println("\t\t\t" + cyan("v. " + this.getClass().getPackage().getImplementationVersion()));
+            System.out.println("\nIf you need any " + cyan("help") + " just type it.");
             console();
         } else {
             runCommand(args[0], Arrays.copyOfRange(args, 1, args.length));
