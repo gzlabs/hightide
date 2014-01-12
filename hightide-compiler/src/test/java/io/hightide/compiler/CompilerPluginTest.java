@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import javax.tools.Diagnostic;
 import javax.tools.JavaFileObject;
+import java.io.IOException;
 import java.lang.reflect.Modifier;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -18,7 +19,7 @@ import static java.util.Arrays.stream;
 public class CompilerPluginTest extends AbstractCompilerPluginTest {
 
     @Test
-    public void testCompilerPluginInit() {
+    public void testCompilerPluginInit() throws IOException {
 
         List<Diagnostic<? extends JavaFileObject>> diagnostics =
                 compileTestCase(
@@ -26,7 +27,7 @@ public class CompilerPluginTest extends AbstractCompilerPluginTest {
         assertCompilationSuccessful(diagnostics);
 
         try {
-            URL classUrl = CompilerPluginTest.class.getClassLoader().getResource("src/test/java/");
+            URL classUrl = CompilerPluginTest.class.getClassLoader().getResource("");
             URLClassLoader loader = new URLClassLoader(new URL[]{ classUrl }, null);
             Class<?> aClass = loader.loadClass("io.hightide.enjos.TestClass");
 

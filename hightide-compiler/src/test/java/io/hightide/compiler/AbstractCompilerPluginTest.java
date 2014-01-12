@@ -3,6 +3,7 @@ package io.hightide.compiler;
 import org.junit.Assert;
 
 import javax.tools.*;
+import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
@@ -15,7 +16,7 @@ public class AbstractCompilerPluginTest {
     private static final JavaCompiler COMPILER = ToolProvider.getSystemJavaCompiler();
 
     protected List<Diagnostic<? extends JavaFileObject>> compileTestCase(
-            String... compilationUnitPaths) {
+            String... compilationUnitPaths) throws IOException {
         assert (compilationUnitPaths != null);
 
 
@@ -23,6 +24,8 @@ public class AbstractCompilerPluginTest {
                 new DiagnosticCollector<>();
         StandardJavaFileManager fileManager =
                 COMPILER.getStandardFileManager(diagnosticCollector, null, null);
+        fileManager.setLocation(StandardLocation.CLASS_OUTPUT,
+                Arrays.asList(new File(this.getClass().getClassLoader().getResource("").getPath())));
         JavaCompiler.CompilationTask task = COMPILER.getTask(null, fileManager, diagnosticCollector,
                 Arrays.asList("-Xplugin:HightideCompilerPlugin"), null,
                 fileManager.getJavaFileObjects(compilationUnitPaths));
