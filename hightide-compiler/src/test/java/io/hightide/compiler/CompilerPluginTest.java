@@ -26,7 +26,8 @@ public class CompilerPluginTest extends AbstractCompilerPluginTest {
         assertCompilationSuccessful(diagnostics);
 
         try {
-            URLClassLoader loader = new URLClassLoader(new URL[]{ new URL("file:/Users/gpan/Work/GroundZeroLabs/Projects/Hightide/hightide/hightide-compiler/src/test/java/") }, null);
+            URL classUrl = CompilerPluginTest.class.getClassLoader().getResource("src/test/java/");
+            URLClassLoader loader = new URLClassLoader(new URL[]{ classUrl }, null);
             Class<?> aClass = loader.loadClass("io.hightide.enjos.TestClass");
 
             /** It should have created 3 getters, 2 setters (no setters for final properties), plus 4 existing methods. */

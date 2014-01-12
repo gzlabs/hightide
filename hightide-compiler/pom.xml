@@ -46,12 +46,12 @@
     <profiles>
         <profile>
             <id>default-tools.jar</id>
-
             <activation>
-                <property>
-                    <name>java.vendor</name>
-                    <value>Sun Microsystems Inc.</value>
-                </property>
+                <activeByDefault>true</activeByDefault>
+                <!--<property>-->
+                    <!--<name>java.vendor</name>-->
+                    <!--<value>Sun Microsystems Inc.</value>-->
+                <!--</property>-->
             </activation>
             <dependencies>
                 <dependency>
