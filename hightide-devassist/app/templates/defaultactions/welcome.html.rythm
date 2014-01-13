@@ -1,3 +1,6 @@
+@args String appConfigAsString,
+      String routesAsString
+
 <!doctype html>
 <html class="no-js" lang="en">
 <head>
@@ -116,36 +119,80 @@
 
     <div class="row">
       <div class="large-12 columns">
+        <p>If you're new to Hightide you can check the 'Getting Started'
+          section below for a quick tip or go straight to the <a href="http://docs.hightide.io/">documentation</a>.<br/>
+          Also, we have your app's configuration and route mapping files here for quick reference.
+        </p>
+
+      </div>
+    </div>
+    <div class="row">
+      <div class="large-12 columns">
         <dl class="tabs radius file-tabs" data-tab>
-          <dd class="active"><a href="#panel1"><i class="fi-page"></i> Main.java</a></dd>
+          <dd class="active"><a href="#panel1"><i class="fi-first-aid"></i> Getting Started</a></dd>
+          <dd><a href="#panel2"><i class="fi-page"></i> application.conf</a></dd>
           <dd><a href="#panel3"><i class="fi-page"></i> routes.conf</a></dd>
         </dl>
         <div class="tabs-content file-content">
           <div class="content active" id="panel1">
-            <pre><code class="language-java">
+            <div class="row">
+                  <div class="large-12 columns">
+                    <p>
+                      You can start by <a href="http://docs.hightide.io/en/latest/routing.html">mapping</a>
+                      your app's root URI to an <a href="http://docs.hightide.io/en/latest/processors.html">action</a> in <strong>app/routes/routes.conf</strong>.
+                      <br/>e.g.
+                      <pre><code class="language-conf">
 @verbatim() {
-package actions;
-
-import resources.Person;
-
-class Main {
-  Person index() {
-    Person p = new Person();
-    p.setName("A name...");
-    p.setLastName("followed by a lastname...");
-    p.setDescription("with a description");
-    return p;
-  }
+"/".get { Main.index }
 }
+                      </code></pre>
+                    </p>
+                    <p>
+                      Then you will need to create an action class inside <strong>app/actions</strong> directory. Based on the above mapping
+                      your class should be similar to this:
+                      <pre><code class="language-java">
+@verbatim() {
+class Main {\n
+\tString index() {\n
+\t\treturn "This is the main index!";\n
+\t}\n
+}
+}
+                      </code></pre>
+                    </p>
+                    <p>
+                      Think you're done?<br/>You need to provide a representation for that returned string.
+                      To get you started add the following template using the name <strong>index.html.rythm</strong> inside <strong>app/templates/main</strong> directory.
+                      <pre><code class="language-markup">
+@verbatim() {
+@args String content\n
+&lt;!doctype html&gt;\n
+&lt;html lang="en"&gt;\n
+&lt;head&gt;\n
+\t&lt;meta charset="UTF-8"&gt;\n
+\t&lt;title&gt;Hightide rules!&lt;/title&gt;\n
+&lt;/head&gt;\n
+&lt;body&gt;\n
+\t@content\n
+&lt;/body&gt;\n
+&lt;/html&gt;\n
+}
+                      </code></pre>
+                    </p>
+                  </div>
+                </div>
+          </div>
+          <div class="content" id="panel2">
+            <pre><code class="language-conf">
+@raw() {
+  @appConfigAsString
 }
             </code></pre>
           </div>
           <div class="content" id="panel3">
-            <pre><code class="language-javascript">
-@verbatim() {
-routes {
-  "/main".get: Main.index
-}
+            <pre><code class="language-conf">
+@raw() {
+  @routesAsString
 }
             </code></pre>
           </div>
@@ -187,6 +234,7 @@ routes {
   <script src="/vendor/js/jquery.js"></script>
   <script src="/vendor/js/foundation.min.js"></script>
   <script src="/vendor/js/prism.js"></script>
+  <script src="/js/prism-conf-highlighter.js"></script>
   <script>
   $(document).foundation();
   </script>

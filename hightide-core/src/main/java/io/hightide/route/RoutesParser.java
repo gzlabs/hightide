@@ -22,11 +22,14 @@ import io.hightide.ApplicationConfig;
 import io.hightide.ApplicationContext;
 import io.hightide.actions.InvocationAction;
 import io.hightide.resources.ResourceLink;
+import io.hightide.utils.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Method;
+import java.nio.charset.StandardCharsets;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -48,6 +51,8 @@ public final class RoutesParser {
 
     private static final ApplicationConfig config = ApplicationContext.instance().getConfig();
 
+    private static String routesStr;
+
     private RoutesParser() {
     }
 
@@ -59,13 +64,15 @@ public final class RoutesParser {
         LinkedHashSet<Route> routes = new LinkedHashSet<>();
         ConfigObject confRoutes;
         try {
+            routesStr = FileUtils.readFile(config.getString("dirs.routes") + File.separator + routesFileName, StandardCharsets.UTF_8);
+
             confRoutes = ConfigFactory.parseFile(
                     new File(config.getString("dirs.routes") + File.separator + routesFileName),
                     ConfigParseOptions.defaults())
                     .withFallback(ConfigFactory.load("default-routes.conf"))
                     .getConfig("routes")
                     .resolve().root();
-        } catch (ConfigException.Missing e) {
+        } catch (ConfigException.Missing | IOException e) {
             throw new RouteParsingException("Failed to parse routes; Make sure routes.conf file is in the classpath!");
         }
 
@@ -255,4 +262,7 @@ public final class RoutesParser {
 
     }
 
+    public static String getRoutesAsString() {
+        return routesStr;
+    }
 }

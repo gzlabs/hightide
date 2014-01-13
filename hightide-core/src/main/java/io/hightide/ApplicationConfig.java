@@ -17,8 +17,13 @@
 package io.hightide;
 
 import com.typesafe.config.Config;
+import io.hightide.utils.FileUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Properties;
 
@@ -27,11 +32,20 @@ import static com.typesafe.config.ConfigFactory.parseFile;
 
 public final class ApplicationConfig {
 
-    public static final String CONFIG_DIR = "config";
+    private static final Logger LOGGER = LoggerFactory.getLogger(ApplicationConfig.class);
+
+    private static final String CONFIG_DIR = "config";
 
     private final Config config;
 
+    private String configStr;
+
     public ApplicationConfig() {
+        try {
+            configStr = FileUtils.readFile(CONFIG_DIR + File.separator + "application.conf", StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            LOGGER.error("Failed to read application.conf file.", e);
+        }
         this.config = parseFile(new File(CONFIG_DIR + File.separator + "application.conf"))
                 .withFallback(load()).resolve();
     }
@@ -74,4 +88,8 @@ public final class ApplicationConfig {
         return new ApplicationConfig(config.getConfig(key));
     }
 
+
+    public String getConfigAsString() {
+        return configStr;
+    }
 }
