@@ -19,7 +19,7 @@ public class TemplateFetcherTest {
         String currentDir = System.getProperty("user.dir");
         Path tempDir = null;
         try {
-            Files.createTempDirectory(Paths.get(currentDir), null);
+            tempDir = Files.createTempDirectory(Paths.get(currentDir), null);
             TemplateFetcher.getPrototype(tempDir, DEFAULT_APP_TEMPLATE);
         } finally {
             if (nonNull(tempDir)) { FileUtils.removeRecursive(tempDir); }
