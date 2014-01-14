@@ -1,5 +1,4 @@
-@args String appConfigAsString,
-      String routesAsString
+@args String appConfigAsString, String routesAsString
 
 <!doctype html>
 <html class="no-js" lang="en">

@@ -65,14 +65,18 @@ public final class RoutesParser {
         ConfigObject confRoutes;
         try {
             routesStr = FileUtils.readFile(config.getString("dirs.routes") + File.separator + routesFileName, StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            logger.warn("Failed to read routes.conf");
+        }
 
+        try {
             confRoutes = ConfigFactory.parseFile(
                     new File(config.getString("dirs.routes") + File.separator + routesFileName),
                     ConfigParseOptions.defaults())
                     .withFallback(ConfigFactory.load("default-routes.conf"))
                     .getConfig("routes")
                     .resolve().root();
-        } catch (ConfigException.Missing | IOException e) {
+        } catch (ConfigException.Missing e) {
             throw new RouteParsingException("Failed to parse routes; Make sure routes.conf file is in the classpath!");
         }
 
