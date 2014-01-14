@@ -21,6 +21,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import static java.util.Objects.nonNull;
+
 /**
  * @author <a href="mailto:gpan@groundzerolabs.com">George Panagiotopoulos</a>
  */
@@ -43,10 +45,14 @@ public final class Prototypes {
             return;
         }
 
-        Path tempDir = Files.createTempDirectory(Paths.get(currentDir), null);
-        Path tempAppDir = TemplateFetcher.getPrototype(tempDir, appTemplateName);
-        AppGenerator.generate(tempAppDir, appDir);
-        FileUtils.removeRecursive(tempDir);
+        Path tempDir = null;
+        try {
+            tempDir = Files.createTempDirectory(Paths.get(currentDir), null);
+            Path tempAppDir = TemplateFetcher.getPrototype(tempDir, appTemplateName);
+            AppGenerator.generate(tempAppDir, appDir);
+        } finally {
+            if (nonNull(tempDir)) { FileUtils.removeRecursive(tempDir); }
+        }
     }
 
 }

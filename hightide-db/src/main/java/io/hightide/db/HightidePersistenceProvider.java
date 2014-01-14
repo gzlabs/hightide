@@ -83,6 +83,12 @@ public class HightidePersistenceProvider implements PersistenceProvider {
             } catch (ClassNotFoundException | IOException e) {
                 throw new DataSourceInitializationException(e);
             }
+
+            try {
+                new DatabaseSynchronizer("default").run();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         return emf;
     }
